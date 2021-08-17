@@ -16,6 +16,8 @@ exports.signup = (req, res) => {
 
     user.save((err, USER) => {
         if (err) {
+            console.log(err);
+
             res.status(500).send({ message: err });
             return;
         }
@@ -24,6 +26,7 @@ exports.signup = (req, res) => {
                 name: { $in: req.body.roles }
             }, (err, roles) => {
                 if (err) {
+                    console.log(err);
                     res.status(500).send({ message: err });
                     return
                 }
@@ -31,6 +34,7 @@ exports.signup = (req, res) => {
 
                 USER.save(err => {
                     if (err) {
+                        console.log(err);
                         res.status(500).send({ message: err })
                         return;
                     }
@@ -40,12 +44,14 @@ exports.signup = (req, res) => {
         } else {
             Role.findOne({ name: 'user' }, (err, role) => {
                 if (err) {
+                    console.log(err);
                     res.status(500).send({ message: err })
                     return;
                 }
                 USER.roles = [role._id];
                 USER.save(err => {
                     if (err) {
+                        console.log(err);
                         res.status(500).send({ message: err })
                         return;
                     }
